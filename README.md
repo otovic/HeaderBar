@@ -1,79 +1,64 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# React Native package that helps you add screen header bars or app bars in your React Native projects.
 
-# Getting Started
+## Installation
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+This package requires the default React Native navigation package and (probably) won't work with other packages. React Native Navigation package is necessary because header bar uses the navigation variable from Navigation package to navigate back or if you add headre actions, to navigate to other screens that you specify.
 
-## Step 1: Start the Metro Server
+npm install @react-navigation/native
+npm install @react-navigation/stack
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+## Usage
 
-To start Metro, run the following command from the _root_ of your React Native project:
+<img src="gitimages/InComponent.png" width="100%" title="hover text">
 
-```bash
-# using npm
-npm start
+There are various different props that you can pass to header bar to customize it. 
 
-# OR using Yarn
-yarn start
-```
+### CustomStyle prop
 
-## Step 2: Start your Application
+With this prop you can customize the header bar style. You can change the background color, elevation and height of the header bar. Here is the type:
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+<img src="gitimages/customStyle.png" width="50%" title="hover text">
 
-### For Android
+### Navigation prop
 
-```bash
-# using npm
-npm run android
+This prop is necessary if navigate back arrow is enabled in header or if you want to travel to other screens with header actions. You need to pass the navigation variable from React Navigation package to this prop. 
 
-# OR using Yarn
-yarn android
-```
+<img src="gitimages/navigation.png" width="50%" title="hover text">
 
-### For iOS
+### NavigateBack prop
 
-```bash
-# using npm
-npm run ios
+If this prop is set to true, a back arrow will be added to the left side of the header bar. When pressed, it will navigate back to the previous screen.
 
-# OR using Yarn
-yarn ios
-```
+<img src="gitimages/looks.jpg" width="50%" title="hover text">
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+### Title prop
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+This prop is used to set the title of the header bar. It will display on the left of the header bar.
 
-## Step 3: Modifying your App
+<img src="gitimages/looks.jpg" width="50%" title="hover text">
 
-Now that you have successfully run the app, let's modify it.
+### TitleStyle prop
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+With this prop you can customize the title style. You can change the color, font size and font weight of the title. Here is all available options:
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+<img src="gitimages/headerTitleCustomization.png" width="50%" title="hover text">
 
-## Congratulations! :tada:
+### Actions prop
 
-You've successfully run and modified your React Native App. :partying_face:
+With this prop you can add actions to the header bar. You can add as many actions as you want (it wont fit on the screen). They will be displayed on the right side of the header bar. The 2 arrows you see in the image below are actions. You can add a callback to execute when they are clicked
 
-### Now what?
+<img src="gitimages/actionProp.png" width="50%" title="hover text">
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+<img src="gitimages/looks.jpg" width="50%" title="hover text">
 
-# Troubleshooting
+### CONCLUSION
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+I went through all major props that you can pass to the header bar. There are some other props as well that can help you customize your header bar. These include StatusBarStyle and actionStyle. With StatusBarStyle you can change the status bar style. With actionStyle you can change the tint color of the action icons. Here is the type of these props:
 
-# Learn More
+<img src="gitimages/actionProp.png" width="50%" title="hover text">
 
-To learn more about React Native, take a look at the following resources:
+<img src="gitimages/statusBarStyle.png" width="50%" title="hover text">
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+### All props
+
+<img src="gitimages/allProps.png" width="50%" title="hover text">
