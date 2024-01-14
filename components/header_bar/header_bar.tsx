@@ -1,7 +1,6 @@
-import { StatusBar, StyleProp, StyleSheet, Text, View } from "react-native";
+import { FlexAlignType, StatusBar, StyleProp, StyleSheet, Text, View } from "react-native";
 import { HeaderProps, defaultHeaderType } from "./header_bar_types";
-import { styles } from "./header_bar_styles";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import HeaderBarAction from "../header_bar_action/header_bar_action";
 
 const HeaderBar = (props: HeaderProps) => {
@@ -12,41 +11,37 @@ const HeaderBar = (props: HeaderProps) => {
             width: "100%",
             position: "absolute",
             top: 0,
-            padding: 10,
+            padding: 5,
             alignItems: "center",
-            justifyContent: "space-between",
             flexDirection: "row",
             elevation: props.customStyle?.elevation ? props.customStyle.elevation : 2,
         },
-        leftMenu: {
-            height: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "row",
-        },
-        rightMenu: {
-            height: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "row",
-            gap: props.actionsStyle?.gapBetween ? props.actionsStyle.gapBetween : 0,
-            marginRight: props.actionsStyle?.marginRight ? props.actionsStyle.marginRight : 0,
-        },
-        actionContainer: {
-            aspectRatio: 0.7,
+        navigateBackContainer: {
+            width: 30,
             height: "100%",
             justifyContent: "center",
             alignItems: "center",
         },
         titleContainer: {
+            flex: 6,
+            height: "100%",
+            justifyContent: getTitleVerticalPosition(),
+            alignItems: getTitleHorizontalPosition(),
+            paddingLeft: 10,
+            paddingRight: 10,
+        },
+        contentContainer: {
+            flex: 6,
             height: "100%",
             justifyContent: "center",
             alignItems: "center",
-            marginLeft: 10,
         },
-        titleText: {
-            fontSize: 20,
-            fontWeight: "bold",
+        actionContainer: {
+            width: 30,
+            height: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+            marginRight: props.actionsStyle?.gapBetween ? props.actionsStyle.gapBetween : 0,
         }
     });
 
@@ -61,6 +56,32 @@ const HeaderBar = (props: HeaderProps) => {
                 letterSpacing: props.titleStyle?.letterSpacing ? props.titleStyle.letterSpacing : 0,
             }
         });
+    }
+
+    function getTitleVerticalPosition(): "center" | "flex-start" | "flex-end" | "space-between" | "space-around" | "space-evenly" | undefined {
+        switch (props.titleStyle?.verticalAlign) {
+            case "top":
+                return "flex-start";
+            case "center":
+                return "center";
+            case "bottom":
+                return "flex-end";
+            default:
+                return "center";
+        }
+    }
+
+    function getTitleHorizontalPosition(): FlexAlignType | undefined {
+        switch (props.titleStyle?.horizontalAlign) {
+            case "left":
+                return "flex-start";
+            case "center":
+                return "center";
+            case "right":
+                return "flex-end";
+            default:
+                return "center";
+        }
     }
 
     function getTitleColor() {
@@ -84,28 +105,27 @@ const HeaderBar = (props: HeaderProps) => {
 
     return (
         <View style={headerStyle.complete}>
-            <View style={headerStyle.leftMenu}>
-                {props.navigateBack ?
-                    <View style={headerStyle.actionContainer}>
-                        <HeaderBarAction onPress={() => { props.navigation.pop() }} image={require('../../../assets/back_arrow.png')} headerColor={props.customStyle?.backgroundColor} tintColor={props.iconStyle?.tintColor}></HeaderBarAction>
-                    </View>
-                    : null}
-                {props.title ?
-                    <View style={headerStyle.titleContainer}>
-                        <Text style={{...getTitleStyle().titleStyle}}>{props.title}</Text>
-                    </View>
-                    : null}
-            </View>
-            <View style={headerStyle.rightMenu}>
-                {  props.actions?.map((action, index) => {
+            {props.navigateBack ?
+                <View style={headerStyle.navigateBackContainer}>
+                    <HeaderBarAction onPress={() => { props.navigation.pop() }} image={require('../../../assets/back_arrow.png')} headerColor={props.customStyle?.backgroundColor} tintColor={props.iconStyle?.tintColor}></HeaderBarAction>
+                </View>
+                : null}
+            {props.title ?
+                <View style={headerStyle.titleContainer}>
+                    <Text style={{ ...getTitleStyle().titleStyle }}>{props.title}</Text>
+                </View>
+                : null}
+            {React.isValidElement(props.content) ?
+                <View style={headerStyle.contentContainer}>{props.content}</View> : null}
+            {props.actions != null ?
+                props.actions?.map((action, index) => {
                     return (
                         <View key={index} style={headerStyle.actionContainer}>
                             <HeaderBarAction onPress={() => { action.callback() }} image={action.icon} headerColor={props.customStyle?.backgroundColor} tintColor={props.iconStyle?.tintColor}></HeaderBarAction>
                         </View>
-                        )
-                    })
-                }
-            </View>
+                    )
+                })
+                : null}
         </View>
     )
 }

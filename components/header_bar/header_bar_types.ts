@@ -1,3 +1,4 @@
+import React from "react"
 import { DimensionValue, ImageSourcePropType, TextStyle } from "react-native"
 
 export type HeaderProps = {
@@ -13,8 +14,9 @@ export type HeaderProps = {
     iconStyle?: iconStyle,
     statusBarStyle?: statusBarStyle,
     actions?: Array<Action>,
+    content?: React.FC | Element | null,
     actionsStyle?: {
-        marginRight?: number,
+        space?: number,
         gapBetween?: number,
     }
 }
@@ -36,6 +38,8 @@ export type statusBarStyle = {
 }
 
 export type headerTitleStyle = {
+    verticalAlign?: "top" | "center" | "bottom",
+    horizontalAlign?: "left" | "center" | "right",
     fontSize?: number,
     color?: string,
     fontWeight?: "normal" | "bold" | "100" | "200" | "300" | "400" | "500" | "600" | "700" | "800" | "900",
